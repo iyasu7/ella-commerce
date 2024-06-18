@@ -10,14 +10,8 @@ export default defineNuxtConfig({
       // stripeKey: process.env.STRIPE_KEY,
     }
   },
-  modules: [
-    // "@nuxtjs/supabase",
-    "@pinia/nuxt",
-    "nuxt-lodash",
-    "@pinia-plugin-persistedstate/nuxt",
-    "@nuxtjs/tailwindcss",
-    "nuxt-icon",
-  ],
+  modules: [// "@nuxtjs/supabase",
+  "@pinia/nuxt", "nuxt-lodash", "@pinia-plugin-persistedstate/nuxt", "@nuxtjs/tailwindcss", "nuxt-icon", "@nuxt/image"],
   app: {
     head: {
       title: "Ella Commerce",
