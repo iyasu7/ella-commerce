@@ -1,8 +1,8 @@
 <template>
   <MainLayout>
-    <div id="ShoppingCartPage" class="mt-4 max-w-[1200px] mx-auto px-2">
+    <div id="ShoppingCartPage" class="mt-4 max-w-6xl mx-auto px-2">
       <div
-        v-if="!userStore.cart.length"
+        v-if="!true"
         class="h-[500px] flex items-center justify-center"
       >
         <div class="pt-20">
@@ -25,7 +25,7 @@
         <div class="md:w-[65%]">
           <div class="bg-white rounded-lg p-4">
             <div class="text-2xl font-bold mb-2">
-              Shopping Cart (0)
+              Shopping Cart ({{ products.length }})
               <!-- Shopping Cart ({{ userStore.cart.length }}) -->
             </div>
           </div>
@@ -37,7 +37,7 @@
           </div>
 
           <div id="Items" class="bg-white rounded-lg p-4 mt-4">
-            <div v-for="product in userStore.cart">
+            <div v-for="product in products">
               <CartItem
                 :product="product"
                 :selectedArray="selectedArray"
@@ -54,6 +54,7 @@
             <div class="flex items-center justify-between my-4">
               <div class="font-semibold">Total</div>
               <div class="text-2xl font-semibold">
+                <!-- $ <span class="font-extrabold">12</span> -->
                 $ <span class="font-extrabold">{{ totalPriceComputed }}</span>
               </div>
             </div>
@@ -89,21 +90,93 @@
 
 <script setup>
 import MainLayout from "~/layouts/MainLayout.vue";
+const products = [
+  {
+    id: 1,
+    title: 'Product 1',
+    description: 'Anim duis sit cillum aliquip. Eiusmod esse sit duis minim duis nulla enim ipsum in amet cupidatat excepteur. Voluptate nostrud consequat quis dolor ex nulla exercitation mollit proident duis eiusmod nisi. Ea sint proident non esse dolore est consequat dolore aliquip culpa.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 1999
+  },
+  {
+    id: 2,
+    title: 'Product 2',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 2999
+  },
+  {
+    id: 3,
+    title: 'Product 3',
+    description: 'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 3999
+  },
+  {
+    id: 4,
+    title: 'Product 4',
+    description: 'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 4999
+  },
+  {
+    id: 5,
+    title: 'Product 5',
+    description: 'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 5999
+  },
+  {
+    id: 6,
+    title: 'Product 6',
+    description: 'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 6999
+  },
+  {
+    id: 7,
+    title: 'Product 7',
+    description: 'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 7999
+  },
+  {
+    id: 8,
+    title: 'Product 8',
+    description: 'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 8999
+  },
+  {
+    id: 9,
+    title: 'Product 9',
+    description: 'Sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    url: 'https://via.placeholder.com/300x300',
+    price: 9999
+  }
+];
 import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
-const user = useSupabaseUser();
+// const user = useSupabaseUser();
 
 let selectedArray = ref([]);
 
-onMounted(() => {
-  setTimeout(() => (userStore.isLoading = false), 200);
-});
+// onMounted(() => {
+//   setTimeout(() => (userStore.isLoading = false), 200);
+// });
 
-const cards = ref(["visa.png", "mastercard.png", "paypal.png", "applepay.png"]);
+const cards = ref(["img/visa.png", "img/mastercard.png", "img/paypal.png", "img/applepay.png"]);
 
+// const totalPriceComputed = computed(() => {
+//   let price = 0;
+//   userStore.cart.forEach((prod) => {
+//     price += prod.price;
+//   });
+//   return price / 100;
+// });
 const totalPriceComputed = computed(() => {
   let price = 0;
-  userStore.cart.forEach((prod) => {
+  products.forEach((prod) => {
     price += prod.price;
   });
   return price / 100;
@@ -126,15 +199,15 @@ const selectedRadioFunc = (e) => {
 
 const goToCheckout = () => {
   let ids = [];
-  userStore.checkout = [];
+  // userStore.checkout = [];
 
-  selectedArray.value.forEach((item) => ids.push(item.id));
+  // selectedArray.value.forEach((item) => ids.push(item.id));
 
-  let res = userStore.cart.filter((item) => {
-    return ids.indexOf(item.id) != -1;
-  });
+  // let res = userStore.cart.filter((item) => {
+  //   return ids.indexOf(item.id) != -1;
+  // });
 
-  res.forEach((item) => userStore.checkout.push(toRaw(item)));
+  // res.forEach((item) => userStore.checkout.push(toRaw(item)));
 
   return navigateTo("/checkout");
 };

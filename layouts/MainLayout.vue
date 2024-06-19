@@ -2,7 +2,7 @@
   <div id="MainLayout" class="w-full fixed z-50">
     <div id="TopMenu" class="w-full bg-[#FAFAFA] border-b md:block hidden">
       <ul
-        class="flex items-center justify-end text-xs text-[#333333] font-light px-2 h-10 bg-[#FAFAFA] max-w-[1200px]"
+        class="flex items-center justify-end text-xs text-[#333333] font-light px-2 h-10 bg-[#FAFAFA] max-w-6xl"
       >
         <li
           class="border-r border-r-gray-400 px-3 hover:text-[#FF4646] cursor-pointer"
@@ -149,7 +149,8 @@
             <span
               class="absolute flex items-center justify-center -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full"
             >
-              <!-- {{ userStore.cart.length }} --> 3
+              <!-- {{ userStore.cart.length }} -->
+              3
             </span>
             <div class="min-w-[40px]">
               <Icon

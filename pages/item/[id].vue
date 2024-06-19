@@ -2,7 +2,7 @@
   <MainLayout>
     <div
       id="ItemPage"
-      class="mt-4 max-w-[1200px] mx-auto px-2 md:px-4 lg:px-6 xl:px-8"
+      class="mt-4 max-w-6xl mx-auto px-2 md:px-4 lg:px-6 xl:px-8"
     >
       <div class="md:flex gap-4 justify-between mx-auto w-full">
         <div class="md:w-[40%]">
@@ -21,9 +21,13 @@
             <button
               v-if="currentIndex > 0"
               @click="prevImage"
-              class="absolute left-0 bg-gray-200 text-white px-2 py-2 rounded-full flex items-center justify-center hover:scale-110"
+              class="absolute left-0 z-10 bg-gray-200 text-white px-2 py-2 rounded-full flex items-center justify-center hover:scale-110"
             >
-              <Icon name="ic:baseline-arrow-back-ios" color="#FF5353" class="text-center pl-1 hover:scale-125" />
+              <Icon
+                name="ic:baseline-arrow-back-ios"
+                color="#FF5353"
+                class="text-center pl-1 hover:scale-125"
+              />
             </button>
             <div class="flex items-center gap-2">
               <div
@@ -36,12 +40,17 @@
                 <NuxtImg
                   width="70"
                   class="rounded-md object-cover border-[3px]"
-                  :class="
-                    [currentImage === image
+                  :class="[
+                    currentImage === image
                       ? 'border-[#FF5353]'
                       : 'border-transparent',
-                    currentIndex === index ? 'scale-75' : 'border-transparent']
-                  "
+                    index === 0 || index === 4
+                      ? 'scale-75 hidden sm:block md:hidden xl:block'
+                      : '',
+                    index === 1 || index === 3
+                      ? 'scale-75 sm:scale-100 md:scale-75 xl:scale-100'
+                      : '',
+                  ]"
                   :src="image"
                 />
               </div>
@@ -51,7 +60,11 @@
               @click="nextImage"
               class="absolute right-0 bg-gray-200 text-white px-2 py-2 rounded-full flex items-center justify-center hover:scale-110"
             >
-              <Icon name="ic:baseline-arrow-forward-ios" color="#FF5353" class="hover:scale-125" />
+              <Icon
+                name="ic:baseline-arrow-forward-ios"
+                color="#FF5353"
+                class="hover:scale-125"
+              />
             </button>
           </div>
         </div>
@@ -185,7 +198,7 @@ const images = ref([
 ]);
 const currentIndex = ref(0);
 const visibleImages = computed(() =>
-  images.value.slice(currentIndex.value, currentIndex.value + 3)
+  images.value.slice(currentIndex.value, currentIndex.value + 5)
 );
 
 const addToCart = () => {

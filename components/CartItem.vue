@@ -14,15 +14,15 @@
                         isSelected ? 'bg-[#FD374F]' : ''
                     ]"
                 >
-                    <div class="h-[8px] w-[8px] rounded-full bg-white" />
+                    <div class="h-[8px] w-[8px] rounded-full bg-white text-center" />
                 </div>
             </div>
         </div>
 
-        <img 
+        <NuxtImg
             class="rounded-md md:w-[150px] w-[90px]" 
             :src="product.url"
-        >
+        />
 
         <div class="overflow-hidden pl-2 w-full">
             <div class="flex items-center justify-between w-full">
