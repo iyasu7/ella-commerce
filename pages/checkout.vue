@@ -59,7 +59,7 @@
           </div>
 
           <div id="Items" class="bg-white rounded-lg p-4 mt-4">
-            <div v-for="product in products">
+            <div v-for="product in userStore.checkout">
               <CheckoutItem :product="product" />
             </div>
           </div>
@@ -202,23 +202,23 @@ let clientSecret = null;
 let currentAddress = ref(null);
 let isProcessing = ref(false);
 
-// onBeforeMount(async () => {
-//     if (userStore.checkout.length < 1) {
-//         return navigateTo('/shoppingcart')
-//     }
+onBeforeMount(async () => {
+    if (userStore.checkout.length < 1) {
+        return navigateTo('/shoppingcart')
+    }
 
-//     total.value = 0.00
-//     if (user.value) {
-//         currentAddress.value = await useFetch(`/api/prisma/get-address-by-user/${user.value.id}`)
-//         setTimeout(() => userStore.isLoading = false, 200)
-//     }
-// })
+    total.value = 0.00
+    if (user.value) {
+        currentAddress.value = await useFetch(`/api/get-address-by-user/${user.value.id}`)
+        setTimeout(() => userStore.isLoading = false, 200)
+    }
+})
 
-// watchEffect(() => {
-//     if (route.fullPath == '/checkout' && !user.value) {
-//         return navigateTo('/auth')
-//     }
-// })
+watchEffect(() => {
+    if (route.fullPath == '/checkout' && !user.value) {
+        return navigateTo('/auth')
+    }
+})
 
 onMounted(async () => {
 //   isProcessing.value = true;

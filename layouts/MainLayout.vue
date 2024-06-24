@@ -29,7 +29,6 @@
           App
         </li>
         <li
-          v-if="user"
           @mouseenter="isAccountMenu = true"
           @mouseleave="isAccountMenu = false"
           class="relative flex items-center px-2.5 hover:text-[#FF4646] h-full cursor-pointer"
@@ -78,12 +77,6 @@
               </li>
             </ul>
           </div>
-        </li>
-        <li
-          class="border-l border-l-gray-400 px-3 hover:text-[#FF4646] cursor-pointer"
-          v-else
-        >
-          Login
         </li>
       </ul>
     </div>
@@ -149,8 +142,7 @@
             <span
               class="absolute flex items-center justify-center -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full"
             >
-              <!-- {{ userStore.cart.length }} -->
-              3
+              {{ userStore.cart.length }}
             </span>
             <div class="min-w-[40px]">
               <Icon
@@ -184,8 +176,8 @@
 import { useUserStore } from "../stores/user";
 const userStore = useUserStore();
 
-// const client = useSupabaseClient();
-// const user = useSupabaseUser();
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
 let isAccountMenu = ref(false);
 let isCartHover = ref(false);
@@ -193,25 +185,23 @@ let isSearching = ref(false);
 let searchItem = ref("");
 let items = ref(null);
 
-// const searchByName = useDebounce(async () => {
-//   isSearching.value = true;
-//   items.value = await useFetch(
-//     `/api/prisma/search-by-name/${searchItem.value}`
-//   );
-//   isSearching.value = false;
-// }, 100);
+const searchByName = useDebounce(async () => {
+  isSearching.value = true;
+  items.value = await useFetch(`/api/search-by-name/${searchItem.value}`);
+  isSearching.value = false;
+}, 100);
 
-// watch(
-//   () => searchItem.value,
-//   async () => {
-//     if (!searchItem.value) {
-//       setTimeout(() => {
-//         items.value = "";
-//         isSearching.value = false;
-//         return;
-//       }, 500);
-//     }
-//     searchByName();
-//   }
-// );
+watch(
+  () => searchItem.value,
+  async () => {
+    if (!searchItem.value) {
+      setTimeout(() => {
+        items.value = "";
+        isSearching.value = false;
+        return;
+      }, 500);
+    }
+    searchByName();
+  }
+);
 </script>

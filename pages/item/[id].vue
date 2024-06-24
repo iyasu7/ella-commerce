@@ -21,12 +21,12 @@
             <button
               v-if="currentIndex > 0"
               @click="prevImage"
-              class="absolute left-0 z-10 bg-gray-200 text-white px-2 py-2 rounded-full flex items-center justify-center hover:scale-110"
+              class="absolute left-0 z-10 bg-gray-200 text-white px-2 py-2 rounded-full flex items-center justify-center"
             >
               <Icon
                 name="ic:baseline-arrow-back-ios"
                 color="#FF5353"
-                class="text-center pl-1 hover:scale-125"
+                class="text-center pl-1 scale-125 hover:scale-150"
               />
             </button>
             <div class="flex items-center gap-2">
@@ -69,10 +69,10 @@
           </div>
         </div>
         <div class="md:w-[60%] bg-white p-3 rounded-lg">
-          <div v-if="product && product">
-            <p class="mb-2">{{ product.title }}</p>
+          <div v-if="product && product.data">
+            <p class="mb-2 font-semibold text-xl">{{ product.data.title }}</p>
             <p class="font-light text-[12px] mb-2">
-              {{ product.description }}
+              {{ product.data.description }}
             </p>
           </div>
 
@@ -139,33 +139,20 @@ const route = useRoute();
 
 let product = ref(null);
 let currentImage = ref("null");
-product.value = {
-  id: 5,
-  title: "Product 5",
-  description:
-    "Sunt in culpa qui officia deserunt mollit anim id est laborum.Tempor velit consequat ipsum nisi. Laboris deserunt duis ullamco duis officia magna non elit adipisicing laborum qui. Aute et amet minim non minim sit aliqua ut aliqua deserunt consequat. Consectetur ipsum elit duis sit anim deserunt in fugiat. Ipsum ullamco sit voluptate aliqua irure eu eu adipisicing. Cillum est deserunt deserunt est ex.",
-  url: "https://via.placeholder.com/300x300",
-  price: 5999,
-};
-// onBeforeMount(async () => {
-//   product.value = await useFetch(
-//     `/api/prisma/get-product-by-id/${route.params.id}`
-//   );
-// });
+let images = ref([]);
 
-onMounted(() => {
-  watchEffect(() => {
-    images.value[0] = "https://picsum.photos/id/212/800/800";
-    currentImage.value = "https://picsum.photos/id/212/800/800";
-  });
+onBeforeMount(async () => {
+  product.value = await useFetch(`/api/get-product-by-id/${route.params.id}`);
+  console.log("product", product.value);
 });
-// watchEffect(() => {
-//   if (product.value && product.value.data) {
-//     currentImage.value = product.value.data.url;
-//     images.value[0] = product.value.data.url;
-//     userStore.isLoading = false;
-//   }
-// });
+
+watchEffect(() => {
+  if (product.value && product.value.data) {
+    currentImage.value = product.value.data.url;
+    images.value[0] = product.value.data.url;
+    userStore.isLoading = false;
+  }
+});
 
 // const isInCart = computed(() => {
 //   let res = false;
@@ -178,24 +165,28 @@ onMounted(() => {
 // });
 
 const priceComputed = computed(() => {
-  if (product.value && product.value) {
-    return product.value.price / 100;
+  if (product.value && product.value.data) {
+    console.log("priceComputed", product.value.data.price / 100);
+    return product.value.data.price / 100;
   }
   return "0.00";
 });
 
-const images = ref([
-  "",
-  "https://picsum.photos/id/233/800/800",
-  "https://picsum.photos/id/165/800/800",
-  "https://picsum.photos/id/99/800/800",
-  "https://picsum.photos/id/144/800/800",
-  "https://picsum.photos/id/212/800/800",
-  "https://picsum.photos/id/233/800/800",
-  "https://picsum.photos/id/165/800/800",
-  "https://picsum.photos/id/99/800/800",
-  "https://picsum.photos/id/144/800/800",
-]);
+images.value = [
+  ...images.value,
+  ...[
+    "",
+    "https://picsum.photos/id/233/800/800",
+    "https://picsum.photos/id/165/800/800",
+    "https://picsum.photos/id/99/800/800",
+    "https://picsum.photos/id/144/800/800",
+    "https://picsum.photos/id/212/800/800",
+    "https://picsum.photos/id/233/800/800",
+    "https://picsum.photos/id/165/800/800",
+    "https://picsum.photos/id/99/800/800",
+    "https://picsum.photos/id/144/800/800",
+  ],
+];
 const currentIndex = ref(0);
 const visibleImages = computed(() =>
   images.value.slice(currentIndex.value, currentIndex.value + 5)

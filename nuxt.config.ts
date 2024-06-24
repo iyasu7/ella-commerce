@@ -7,11 +7,21 @@ export default defineNuxtConfig({
     public: {
       // supabaseUrl: process.env.SUPABASE_URL,
       // supabaseKey: process.env.SUPABASE_KEY,
-      // stripeKey: process.env.STRIPE_KEY,
-    }
+      stripeKey: process.env.STRIPE_KEY,
+    },
   },
-  modules: [// "@nuxtjs/supabase",
-  "@pinia/nuxt", "nuxt-lodash", "@pinia-plugin-persistedstate/nuxt", "@nuxtjs/tailwindcss", "nuxt-icon", "@nuxt/image"],
+  modules: [
+    "@nuxtjs/supabase",
+    "@pinia/nuxt",
+    "nuxt-lodash",
+    "@pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/tailwindcss",
+    "nuxt-icon",
+    "@nuxt/image",
+  ],
+  supabase: {
+  redirect: false
+  },
   app: {
     head: {
       title: "Ella Commerce",
